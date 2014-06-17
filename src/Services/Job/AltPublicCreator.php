@@ -5,24 +5,24 @@ use Gil\Caspian\Services\Job\Creator;
 use Gil\Caspian\Common\AbstractService;
 use Gil\Caspian\Mailers\JobInModeration;
 
-class PublicCreator extends AbstractService {
+class AltPublicCreator extends AbstractService {
 
 	protected $modarator;
 
 	protected $mailer;
 
-	// protected $creator;
+	protected $creator;
 
-	public function __construct(Moderator $moderator, JobInModeration $mailer)
+	public function __construct(Creator $creator, Moderator $moderator, JobInModeration $mailer)
 	{
 		$this->moderator = $moderator;
 		$this->mailer = $mailer;
 	}
 
-	// public function create($data)
-	// {
-	// 	return $this->creator->notify($this)->create($data);
-	// }
+	public function create($data)
+	{
+		return $this->creator->notify($this)->create($data);
+	}
 
 	public function succes($job)
 	{
@@ -37,8 +37,10 @@ class PublicCreator extends AbstractService {
 
 			return $this->notifyListener()->success($job);
 		}
-
-		return $this->notifyListener()->failure($job);
+		else
+		{
+			return $this->notifyListener()->failure('failed');	
+		}
 	}
 
 	public function failure($message)
