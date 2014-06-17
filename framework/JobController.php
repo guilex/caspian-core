@@ -7,7 +7,7 @@ class JobController {
 	$baseCreator;
 	$publicCreator;
 
-	public function __construct(Creator $baseCreator, Public $publicCreator)
+	public function __construct(Creator $baseCreator, PublicCreator $publicCreator)
 	{
 		$this->baseCreator = $baseCreator;
 		$this->publicCreator = $publicCreator;

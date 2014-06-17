@@ -7,7 +7,18 @@ class Job {
 
 	public $title;
 	public $description;
-	public $location;
-	public $category;
+
+
+	public function __construct($title, $description)
+	{
+		$this->title = $title;
+		$this->description = $description;
+	}
+
+
+	public function newInstance($title, $description)
+	{
+		return new static($title, $description);
+	}
 
 }

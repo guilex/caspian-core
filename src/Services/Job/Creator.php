@@ -1,5 +1,6 @@
 <?php namespace Gil\Caspian\Services\Job;
 
+use Gil\Caspian\Job;
 use Gil\Caspian\Common\AbstractService;
 use Gil\Caspian\Sanitizer\JobSanitizer;
 use Gil\Caspian\Validators\JobValidator;
@@ -7,18 +8,19 @@ use Gil\Caspian\Contracts\Repositories\JobInterface;
 
 class Creator extends AbstractService {
 
+	protected $model;
 	protected $repository;
 	protected $validator;
 	protected $sanitizer;
 
-	protected $listener;
-
 	public function __construct(
+		Job $model,
 		JobInterface $repository, 
 		JobValidator $validator,
 		JobSanitizer $sanitizer
 	)
 	{
+		$this->model = $model;
 		$this->repository = $repository;
 		$this->validator = $validator;
 		$this->sanitizer = $sanitizer;
@@ -32,9 +34,11 @@ class Creator extends AbstractService {
 
 		if ($validation->passes())
 		{
-			if ($this->repository->create($sanitized))
+			$job = $this->model->newInstance($sanitized['title'], $sanitized['description']);
+			
+			if ($this->repository->create($job))
 			{
-				return $this->notifyListener()->success('job.creation.success');
+				return $this->notifyListener()->success($job);
 			}
 			else
 			{
