@@ -1,0 +1,15 @@
+{
+    "name": "gil/caspian",
+    "description": "job board core",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dragan Stefanov",
+            "email": "dragan.stefanov@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+
+    }
+}
